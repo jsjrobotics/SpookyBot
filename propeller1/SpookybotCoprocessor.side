@@ -1,8 +1,12 @@
 SpookybotCoprocessor.c
+TemperatureModule.cogc
+UltraSonicModule.cogc
+CogFunctions.h
 >compiler=C
->memtype=cmm main ram compact
+>memtype=lmm main ram
 >optimize=-Os
 >-m32bit-doubles
+>-Wall
 >-fno-exceptions
 >defs::-std=c99
 >-lm

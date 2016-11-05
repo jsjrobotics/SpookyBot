@@ -1,3 +1,7 @@
+*.o
+*.binary
+*.elf
+
 *.iml
 .gradle
 /local.properties

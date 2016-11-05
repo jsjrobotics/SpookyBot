@@ -1,0 +1,54 @@
+/*
+* Read from the Ultrasonic ranging module HC - SR04
+  Start Read: 10 microseconds high on trigger input (pin 0)
+  Read Pulse Output and measure high time
+  Convert to value
+  microseconds / 58 = centimeters
+  microseconds / 148 = inch
+
+  NOTE: Currently only works at 80mhz Clock cycle
+
+  Using internal CounterA as numerically controlled oscillator
+  Set PLL mode to 2 - Frequency Register to Phase Register accumulator
+  Send 10 microsecond high pulse to device
+  Wait for echo pin to go high
+  Start Counter
+  Wait for echo pin to go low
+  Calculate distance from counter time
+  Wait 60 milliseconds to avoid detecting echo
+  
+*/
+
+#include "CogFunctions.h"
+void sendStartSignal(int);
+
+int pin1;
+int pin2;
+int pin3;
+int pin4;
+
+
+inline void sendStartSignal(int pin) {
+  setHigh(pin); 
+  // Wait 10 microseconds
+  waitcnt(CNT + 800);
+  setLow(pin);
+}
+
+void main(int * pins) {
+  pin1 = pins[0];
+  pin2 = pins[1];
+  pin3 = pins[2];
+  pin4 = pins[3];
+  setOutput(pin1);
+  
+  unsigned int counterMode = 0x1F << 26;
+  CTRA = 0; // Stop counter
+  PHSA = 0; // reset accumulator
+  sendStartSignal(pin1);
+  while( read(pin2) != 1);
+  CTRA = counterMode;
+  while( read(pin2) != 0);
+  int result = PHSA;
+  CTRA = 0;
+}
