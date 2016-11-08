@@ -26,12 +26,20 @@ Checksum = 8 bit integral RH data + 8 bit decimal RH data +
 */
 #include "CogFunctions.h"
 
+int ticksForMicrosecond;
 
+int fiftyMicroseconds() {
+  return 50 * ticksForMicrosecond;
+}
+
+int fiveHundredMicroseconds() {
+  return 500 * ticksForMicrosecond;
+}
 
 void sendStartSignal(int pin) {
-  setOutput(pin1);
-  setLow(pin1);
-  waitcnt(FIVE_HUNDRED_MICROSECONDS);
+  setOutput(pin);
+  setLow(pin);
+  waitcnt(fiveHundredMicroseconds());
 }
 
 void detectStart(int pin) {
@@ -41,13 +49,14 @@ void detectStart(int pin) {
   // Pin is low
   while( !read(pin) );
   // Pin is high
-  for( int index = 0; index < 40; index++){
+  int index;
+  for(index = 0; index < 40; index++){
     CTRA = 0; // Stop counter
     PHSA = 0; // reset accumulator
     while( read(pin) );
     // Pin is low    
-    waitcnt(FIFTY_MICROSECONDS);
-    CTRA = COUNTER_MODE_LOGIC_ALWAYS;
+    waitcnt(fiftyMicroseconds());
+    CTRA = counterA_logicAlways();
     while( !read(pin) );
     // Pin is high
     while( read(pin) );
@@ -64,6 +73,7 @@ void main(int *pins) {
   pin2 = pins[1];
   pin3 = pins[2];
   pin4 = pins[3];
+  ticksForMicrosecond = pins[4];
   sendStartSignal(pin1);
   detectStart(pin1);
 }

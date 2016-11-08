@@ -17,10 +17,8 @@
 
 #define COG_MIN_MEMORY 40
 #define SENSOR_DETECT_STACK_SIZE 60
-
-
-
 int main() {
+  int test = CLKFREQ / 10;
   while (1) {
     print("Count = %d", CNT);
     waitcnt(CNT+800);

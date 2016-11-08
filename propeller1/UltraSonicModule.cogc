@@ -20,13 +20,17 @@
 */
 
 #include "CogFunctions.h"
+int ticksForMicrosecond;
 
 void sendStartSignal(int);
 
+int tenMicroseconds() {
+  return 10 * ticksForMicrosecond;
+}
 
 inline void sendStartSignal(int pin) {
   setHigh(pin); 
-  waitcnt(TEN_MICROSECONDS);
+  waitcnt(tenMicroseconds());
   setLow(pin);
 }
 
@@ -36,13 +40,14 @@ void main(int * pins) {
   pin2 = pins[1];
   pin3 = pins[2];
   pin4 = pins[3];
+  ticksForMicrosecond = pins[4];
   setOutput(pin1);
   
   CTRA = 0; // Stop counter
   PHSA = 0; // reset accumulator
   sendStartSignal(pin1);
   while( read(pin2) != 1);
-  CTRA = COUNTER_MODE_LOGIC_ALWAYS;
+  CTRA = counterA_logicAlways();
   while( read(pin2) != 0);
   int result = PHSA;
   CTRA = 0;

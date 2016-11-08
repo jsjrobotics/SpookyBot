@@ -26,6 +26,7 @@
 #define COG_FUNCTIONS_H
 
 #include <propeller.h>
+#include <cog.h>
 
 void setOutput(int);
 void setLow(int);
@@ -34,8 +35,10 @@ void setInput(int);
 int readPin(int);
 
 
-
-
+inline int counterA_logicAlways(){
+  return CTRA | (0x1F << 26);  
+}  
+  
 inline void setOutput(int pin) {
   int mask = 1 << pin;
   DIRA |= mask;
