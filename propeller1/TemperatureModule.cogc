@@ -67,13 +67,13 @@ void detectStart(int pin) {
 }
 
 
-void main(int *pins) {
+void main(struct cogInit *init) {
   int pin1, pin2, pin3, pin4;
-  pin1 = pins[0];
-  pin2 = pins[1];
-  pin3 = pins[2];
-  pin4 = pins[3];
-  ticksForMicrosecond = pins[4];
+  pin1 = init->pin1;
+  pin2 = init->pin2;
+  pin3 = init->pin3;
+  pin4 = init->pin4;
+  ticksForMicrosecond = init->ticksForMicrosecond;
   sendStartSignal(pin1);
   detectStart(pin1);
 }

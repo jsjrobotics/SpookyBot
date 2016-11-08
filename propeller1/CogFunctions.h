@@ -27,6 +27,7 @@
 
 #include <propeller.h>
 #include <cog.h>
+#include "CogSetup.h"
 
 void setOutput(int);
 void setLow(int);
