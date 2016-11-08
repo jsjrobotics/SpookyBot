@@ -3,9 +3,8 @@
   Uses single wire interface
   Pull pin down and hold for 500 microseconds
   Set pin input
-  Verify input is high
   Wait 20 to 40 microseconds for sensor to ack
-  detect pin pull down as ack (80 microseconds.
+  detect pin pull down as ack (80 microseconds)
   detect pin pull up (80 microseconds)
   Begin reading 40 bits of data:
     detect 50 microsecond pull down 
@@ -25,9 +24,46 @@ Checksum = 8 bit integral RH data + 8 bit decimal RH data +
 
 
 */
-#include <propeller.h>
-int var;
+#include "CogFunctions.h"
 
-void main(void *input) {
-  int t = CNT;
+
+
+void sendStartSignal(int pin) {
+  setOutput(pin1);
+  setLow(pin1);
+  waitcnt(FIVE_HUNDRED_MICROSECONDS);
+}
+
+void detectStart(int pin) {
+    
+  setInput(pin);
+  while( read(pin) );
+  // Pin is low
+  while( !read(pin) );
+  // Pin is high
+  for( int index = 0; index < 40; index++){
+    CTRA = 0; // Stop counter
+    PHSA = 0; // reset accumulator
+    while( read(pin) );
+    // Pin is low    
+    waitcnt(FIFTY_MICROSECONDS);
+    CTRA = COUNTER_MODE_LOGIC_ALWAYS;
+    while( !read(pin) );
+    // Pin is high
+    while( read(pin) );
+    // Pin is low
+    int result = PHSA;    
+  }  
+  
+}
+
+
+void main(int *pins) {
+  int pin1, pin2, pin3, pin4;
+  pin1 = pins[0];
+  pin2 = pins[1];
+  pin3 = pins[2];
+  pin4 = pins[3];
+  sendStartSignal(pin1);
+  detectStart(pin1);
 }
