@@ -67,7 +67,7 @@ void detectStart(int pin) {
 }
 
 
-void main(struct cogInit *init) {
+void temperatureModuleMain(struct cogInit *init) {
   int pin1, pin2, pin3, pin4;
   pin1 = init->pin1;
   pin2 = init->pin2;

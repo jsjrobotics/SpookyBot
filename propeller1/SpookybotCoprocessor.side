@@ -3,6 +3,7 @@ TemperatureModule.cogc
 UltraSonicModule.cogc
 CogFunctions.h
 CogSetup.h
+TemperatureModule.h
 >compiler=C
 >memtype=lmm main ram
 >optimize=-Os
