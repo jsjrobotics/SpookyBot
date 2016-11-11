@@ -2,5 +2,6 @@
 
 #define TEST_COG_H
 #include "CogSetup.h"
-void testCog(struct cogInit *init);
+#include <simpletools.h>
+void testCog(struct CogInit *init);
 #endif

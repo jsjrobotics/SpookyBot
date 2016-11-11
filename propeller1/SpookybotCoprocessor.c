@@ -18,15 +18,15 @@
 #include "TestCog.h"
 #define COG_MIN_MEMORY 40
 #define SENSOR_DETECT_STACK_SIZE 60
-
+unsigned int stack[COG_MIN_MEMORY + SENSOR_DETECT_STACK_SIZE];
 
 typedef struct ApplicationArguments {
-  void (*module1)(struct cogInit *init);
-  void (*module2)(struct cogInit *init);
-  void (*module3)(struct cogInit *init);
-  void (*module4)(struct cogInit *init);
-  void (*module5)(struct cogInit *init);
-  void (*module6)(struct cogInit *init);
+  CogInit *module1;
+  CogInit *module2;
+  CogInit *module3;
+  CogInit *module4;
+  CogInit *module5;
+  CogInit *module6;  
 } Application;
 
 
@@ -47,8 +47,16 @@ int isShuttingDown(){
 }  
 
 int main() {
-  Application application;
-  loadModules(&application);
+  Application * application = malloc( sizeof(Application) );
+  application->module1 = malloc( sizeof(CogInit) );
+  application->module2 = malloc( sizeof(CogInit) );
+  application->module3 = malloc( sizeof(CogInit) );
+  application->module4 = malloc( sizeof(CogInit) );
+  application->module5 = malloc( sizeof(CogInit) );
+  application->module6 = malloc( sizeof(CogInit) );
+  
+  application->module1->runningLed = 19;
+  loadModules(application);
   while (1){
     if (isShuttingDown()){
       break; 

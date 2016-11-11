@@ -24,7 +24,7 @@ int ticksForMicrosecond;
 
 void ultrasonicModuleSendStartSignal(int);
 static int tenMicroseconds();
-void ultrasonicModuleMain(struct cogInit *);
+void ultrasonicModuleMain(struct CogInit *);
 
 int tenMicroseconds() {
   return 10 * ticksForMicrosecond;
@@ -36,7 +36,7 @@ inline void ultrasonicModuleSendStartSignal(int pin) {
   setLow(pin);
 }
 
-void ultrasonicModuleMain(struct cogInit *init) {
+void ultrasonicModuleMain(struct CogInit *init) {
   int pin1, pin2, pin3, pin4;
   pin1 = init->pin1;
   pin2 = init->pin2;
@@ -48,9 +48,9 @@ void ultrasonicModuleMain(struct cogInit *init) {
   CTRA = 0; // Stop counter
   PHSA = 0; // reset accumulator
   ultrasonicModuleSendStartSignal(pin1);
-  while( read(pin2) != 1);
+  while( readPin(pin2) != 1);
   CTRA = counterA_logicAlways();
-  while( read(pin2) != 0);
+  while( readPin(pin2) != 0);
   int result = PHSA;
   CTRA = 0;
 }

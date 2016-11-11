@@ -2,6 +2,7 @@
 
 #define TEMPERATURE_MODULE_H
 
-void temperatureModuleMain(struct cogInit *init);
+#include "CogSetup.h"
+void temperatureModuleMain(struct CogInit *init);
 
 #endif

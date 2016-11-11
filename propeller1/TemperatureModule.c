@@ -45,21 +45,21 @@ void sendStartSignal(int pin) {
 void detectStart(int pin) {
     
   setInput(pin);
-  while( read(pin) );
+  while( readPin(pin) );
   // Pin is low
-  while( !read(pin) );
+  while( !readPin(pin) );
   // Pin is high
   int index;
   for(index = 0; index < 40; index++){
     CTRA = 0; // Stop counter
     PHSA = 0; // reset accumulator
-    while( read(pin) );
+    while( readPin(pin) );
     // Pin is low    
     waitcnt(fiftyMicroseconds());
     CTRA = counterA_logicAlways();
-    while( !read(pin) );
+    while( !readPin(pin) );
     // Pin is high
-    while( read(pin) );
+    while( readPin(pin) );
     // Pin is low
     int result = PHSA;    
   }  
@@ -67,7 +67,7 @@ void detectStart(int pin) {
 }
 
 
-void temperatureModuleMain(struct cogInit *init) {
+void temperatureModuleMain(struct CogInit *init) {
   int pin1, pin2, pin3, pin4;
   pin1 = init->pin1;
   pin2 = init->pin2;

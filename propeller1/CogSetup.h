@@ -2,13 +2,13 @@
 
 #define COG_SETUP_H
 
-struct cogInit {
+typedef struct CogInit {
   int pin1;
   int pin2;
   int pin3;
   int pin4;
   int runningLed;
   int ticksForMicrosecond; 
-};
+} CogInit;
   
 #endif

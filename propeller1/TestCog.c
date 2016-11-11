@@ -1,6 +1,5 @@
 #include "TestCog.h"
 
-void testCog(struct cogInit *init){
-  high(15);
-  while(1);
+void testCog(struct CogInit *init){
+  high(init->runningLed);
 }  

@@ -15,4 +15,4 @@ TestCog.h
 >-fno-exceptions
 >defs::-std=c99
 >-lm
->BOARD::SPINSTAMP
+>BOARD::QUICKSTART
