@@ -7,6 +7,7 @@ struct cogInit {
   int pin2;
   int pin3;
   int pin4;
+  int runningLed;
   int ticksForMicrosecond; 
 };
   

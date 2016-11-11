@@ -22,19 +22,21 @@
 #include "CogFunctions.h"
 int ticksForMicrosecond;
 
-void sendStartSignal(int);
+void ultrasonicModuleSendStartSignal(int);
+static int tenMicroseconds();
+void ultrasonicModuleMain(struct cogInit *);
 
 int tenMicroseconds() {
   return 10 * ticksForMicrosecond;
 }
 
-inline void sendStartSignal(int pin) {
+inline void ultrasonicModuleSendStartSignal(int pin) {
   setHigh(pin); 
   waitcnt(tenMicroseconds());
   setLow(pin);
 }
 
-void main(struct cogInit *init) {
+void ultrasonicModuleMain(struct cogInit *init) {
   int pin1, pin2, pin3, pin4;
   pin1 = init->pin1;
   pin2 = init->pin2;
@@ -45,7 +47,7 @@ void main(struct cogInit *init) {
   
   CTRA = 0; // Stop counter
   PHSA = 0; // reset accumulator
-  sendStartSignal(pin1);
+  ultrasonicModuleSendStartSignal(pin1);
   while( read(pin2) != 1);
   CTRA = counterA_logicAlways();
   while( read(pin2) != 0);

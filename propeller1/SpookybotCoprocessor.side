@@ -1,9 +1,12 @@
 SpookybotCoprocessor.c
-TemperatureModule.cogc
-UltraSonicModule.cogc
+TemperatureModule.c
+UltraSonicModule.c
 CogFunctions.h
 CogSetup.h
 TemperatureModule.h
+CogFunctions.c
+TestCog.c
+TestCog.h
 >compiler=C
 >memtype=lmm main ram
 >optimize=-Os
@@ -12,4 +15,4 @@ TemperatureModule.h
 >-fno-exceptions
 >defs::-std=c99
 >-lm
->BOARD::QUICKSTART
+>BOARD::SPINSTAMP

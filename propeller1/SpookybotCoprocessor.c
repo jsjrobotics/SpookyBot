@@ -13,8 +13,9 @@
   1 core will run batch writing data to eeprom (0)
   1 core will communicate with host over i2c (6)
 */
-#include "simpletools.h"                     
+#include "simpletools.h"  
 #include "TemperatureModule.h"
+#include "TestCog.h"
 #define COG_MIN_MEMORY 40
 #define SENSOR_DETECT_STACK_SIZE 60
 
@@ -29,8 +30,8 @@ typedef struct ApplicationArguments {
 } Application;
 
 
-void loadModules(){
-  
+void loadModules(Application *application){
+  cogstart(testCog, application->module1, stack, sizeof(stack));
 }  
 
 void waitOneSecond(){
@@ -46,7 +47,8 @@ int isShuttingDown(){
 }  
 
 int main() {
-  loadModules();
+  Application application;
+  loadModules(&application);
   while (1){
     if (isShuttingDown()){
       break; 

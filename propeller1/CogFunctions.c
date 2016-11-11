@@ -1,12 +1,10 @@
 #include "CogFunctions.h"
 
-inline void sendStartSignal(int pin) {
-  setHigh(pin); 
-  // Wait 10 microseconds
-  waitcnt(CNT + 800);
-  setLow(pin);
-}
 
+inline int counterA_logicAlways(){
+  return CTRA | (0x1F << 26);  
+}  
+  
 inline void setOutput(int pin) {
   int mask = 1 << pin;
   DIRA |= mask;
