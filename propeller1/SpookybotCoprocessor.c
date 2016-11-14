@@ -43,7 +43,7 @@ void writeToEeprom(){
 }  
 
 int isShuttingDown(){
-  return 0;
+  return 1;
 }  
 
 int main() {
@@ -55,7 +55,8 @@ int main() {
   application->module5 = malloc( sizeof(CogInit) );
   application->module6 = malloc( sizeof(CogInit) );
   
-  application->module1->runningLed = 19;
+  application->module1->runningLed = 15;
+  testCog(application->module1);
   loadModules(application);
   while (1){
     if (isShuttingDown()){
